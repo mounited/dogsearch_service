@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  backend_db:
+    build: ./backend/db
+    environment:
+      MONGO_INITDB_DATABASE: ${DBNAME} 
+    volumes:
+      - backend_data:/data/db
+volumes:
+  backend_data: {}
