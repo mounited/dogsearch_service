@@ -6,5 +6,10 @@ services:
       MONGO_INITDB_DATABASE: ${DBNAME} 
     volumes:
       - backend_data:/data/db
+  backend_api:
+    build:
+      context: ./backend/api
+    depends_on:
+      - backend_db
 volumes:
   backend_data: {}
