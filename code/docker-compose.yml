@@ -11,5 +11,11 @@ services:
       context: ./backend/api
     depends_on:
       - backend_db
+  proxy:
+    build: ./proxy
+    ports:
+      - ${PORT}:80
+    depends_on:
+      - backend_api
 volumes:
   backend_data: {}
