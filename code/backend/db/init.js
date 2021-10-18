@@ -18,7 +18,8 @@ db.attributes.insertMany([
     "values": [
       "dark",
       "light",
-      "mixed"
+      "mixed",
+      "undefined"
     ]
   },
   {
@@ -26,7 +27,8 @@ db.attributes.insertMany([
     "values": [
       "long",
       "short",
-      "absent"
+      "absent",
+      "undefined"
     ]
   },
 ])
