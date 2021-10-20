@@ -1,5 +1,5 @@
 from flask_restful import Resource, abort
-from dogsearch.db import get_db
+from dogsearch.api.db import get_db
 
 
 class AttributeList(Resource):

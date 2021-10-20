@@ -1,7 +1,7 @@
 from flask import Response
 from flask_restful import Resource, abort, request
 from bson import ObjectId
-from dogsearch.db import get_db
+from dogsearch.api.db import get_db
 
 
 class ImageList(Resource):
@@ -11,7 +11,7 @@ class ImageList(Resource):
             data = request.get_data()
             db = get_db()
             id = db.images.insert_one(
-                {"data": data, "ext": ext, "status": "PENDING"}
+                {"ext": ext, "status": "PENDING"}
             ).inserted_id
             return [{"id": str(id)}], 201
         elif request.mimetype == "application/zip":

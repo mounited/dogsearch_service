@@ -6,13 +6,13 @@ RUN apt-get update && apt-get install -y \
   python3-pymongo \
   && rm -rf /var/apt/lists/*
 
-COPY . /api
+COPY . /app
 
-WORKDIR /api
+WORKDIR /app
 
 RUN pip3 install -r requirements.txt
 
 ENV HOST 0.0.0.0
 ENV PORT 80
 
-CMD ["python3", "-m", "dogsearch"]
+CMD ["python3", "-m", "dogsearch.api"]
