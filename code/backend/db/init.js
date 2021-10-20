@@ -1,3 +1,9 @@
+rs.initiate();
+
+while (!rs.isMaster().ismaster) {
+  sleep(100);
+}
+
 db.attributes.insertMany([
   {
     "name": "has_dog",
