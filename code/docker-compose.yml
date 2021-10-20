@@ -6,6 +6,7 @@ services:
       MONGO_INITDB_DATABASE: ${DB_NAME} 
     volumes:
       - backend_data:/data/db
+    container_name: ${COMPOSE_PROJECT_NAME}_backend_db
   backend_api:
     build:
       context: ./backend/api
@@ -14,11 +15,13 @@ services:
     environment:
       - DB_HOST=backend_db
       - DB_NAME
+    container_name: ${COMPOSE_PROJECT_NAME}_backend_api
   proxy:
     build: ./proxy
     ports:
       - ${PORT}:80
     depends_on:
       - backend_api
+    container_name: ${COMPOSE_PROJECT_NAME}_backend_proxy
 volumes:
   backend_data: {}
