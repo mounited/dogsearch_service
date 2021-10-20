@@ -6,7 +6,13 @@ RUN apt-get update && apt-get install -y \
   python3-pymongo \
   && rm -rf /var/apt/lists/*
 
-COPY . /app
+COPY model /model
+
+WORKDIR /model
+
+RUN pip3 install -r requirements.txt
+
+COPY app /app
 
 WORKDIR /app
 

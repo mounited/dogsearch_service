@@ -1,0 +1,3 @@
+[submodule "code/backend/model"]
+	path = code/backend/worker/model
+	url = ../dogsearch_model
