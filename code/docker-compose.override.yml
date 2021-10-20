@@ -3,3 +3,7 @@ services:
   backend_api:
     volumes:
       - ./backend/api:/app
+  backend_worker:
+    volumes:
+      - ./backend/worker:/app
+      - ./backend/model/dogsearch/model:/app/dogsearch/model
