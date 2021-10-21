@@ -19,6 +19,17 @@ class ImageList(Resource):
         else:
             abort(400, description="Only images or ZIP archives are accepted")
 
+    def get(self):
+        query = {"status": "PROCESSED"}
+        for key, value in request.args.items():
+            query["attribute_values.{}".format(key)] = value
+        db = get_db()
+        images = db.images.find(query, {"data": False})
+        return [
+            {"id": str(image["_id"]), "attribute_values": image["attribute_values"]}
+            for image in images
+        ]
+
 
 class Image(Resource):
     def get(self, id_str):
