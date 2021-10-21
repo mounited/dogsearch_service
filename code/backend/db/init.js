@@ -8,23 +8,23 @@ db.attributes.insertMany([
   {
     "name": "is_animal_there",
     "values": [
-      "yes",
       "no",
+      "yes",
     ]
   },
   {
     "name": "is_it_a_dog",
     "values": [
-      "yes",
       "no",
+      "yes",
       "undefined",
     ]
   },
   {
     "name": "is_the_owner_there",
     "values": [
-      "yes",
       "no",
+      "yes",
       "undefined",
     ]
   },
