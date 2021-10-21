@@ -3,10 +3,13 @@ import time
 
 from pymongo import MongoClient
 
+from dogsearch.model import Model
+
 
 class Worker:
     def __init__(self, host, dbname):
         self.db = MongoClient("mongodb://{}".format(host))[dbname]
+        self.model = Model.create("random")
 
     def run(self):
         images = self.db.images.find({"status": "PENDING"})
@@ -25,6 +28,7 @@ class Worker:
         if image is None:
             return
         time.sleep(10)
+        res = self.model.process(image["data"], image["ext"])
         self.db.images.update_one({"_id": id}, {"$set": {"status": "PROCESSED"}})
-        print(str(id))
+        print(str(id), res)
         sys.stdout.flush()
