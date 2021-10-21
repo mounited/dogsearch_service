@@ -27,8 +27,12 @@ class Worker:
         )
         if image is None:
             return
-        time.sleep(10)
+        start = time.time()
         res = self.model.process(image["data"], image["ext"])
-        self.db.images.update_one({"_id": id}, {"$set": {"status": "PROCESSED"}})
-        print(str(id), res)
+        end = time.time()
+        elapsed_time = end - start
+        self.db.images.update_one(
+            {"_id": id}, {"$set": {"status": "PROCESSED", "elapsed_time": elapsed_time}}
+        )
+        print("id: {}, elapsed_time: {}, result: {}".format(str(id), elapsed_time, res))
         sys.stdout.flush()
