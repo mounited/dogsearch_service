@@ -6,35 +6,44 @@ while (!rs.isMaster().ismaster) {
 
 db.attributes.insertMany([
   {
-    "name": "has_dog",
+    "name": "is_animal_there",
     "values": [
       "yes",
       "no",
     ]
   },
   {
-    "name": "has_person",
+    "name": "is_it_a_dog",
     "values": [
       "yes",
       "no",
+      "undefined",
     ]
   },
   {
-    "name": "dog_color",
+    "name": "is_the_owner_there",
+    "values": [
+      "yes",
+      "no",
+      "undefined",
+    ]
+  },
+  {
+    "name": "color",
     "values": [
       "dark",
       "light",
       "mixed",
-      "undefined"
+      "undefined",
     ]
   },
   {
-    "name": "dog_tail",
+    "name": "tail",
     "values": [
       "long",
       "short",
       "absent",
-      "undefined"
+      "undefined",
     ]
   },
 ])
