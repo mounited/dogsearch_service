@@ -11,7 +11,7 @@ class ImageList(Resource):
             data = request.get_data()
             db = get_db()
             id = db.images.insert_one(
-                {"ext": ext, "status": "PENDING"}
+                {"data": data, "ext": ext, "status": "PENDING"}
             ).inserted_id
             return [{"id": str(id)}], 201
         elif request.mimetype == "application/zip":
