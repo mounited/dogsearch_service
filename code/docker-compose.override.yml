@@ -7,3 +7,7 @@ services:
     volumes:
       - ./backend/worker/app:/app
       - ./backend/worker/model/dogsearch/model:/app/dogsearch/model
+  frontend:
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
