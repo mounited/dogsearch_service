@@ -27,7 +27,7 @@ const AppNav = (props) => {
     setOpen(!open)
   }
   const drawerItems = [
-    { text: "Search", icon: "search" },
+    { text: "Query", icon: "search" },
     { text: "Upload", icon: "upload" },
     { text: "Status", icon: "assessment" },
   ]
