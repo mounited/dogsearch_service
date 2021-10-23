@@ -18,7 +18,7 @@ import CssBaseline from "@mui/material/CssBaseline"
 import Box from "@mui/material/Box"
 
 import AppNav from "AppNav"
-import Query from "Query"
+import QueryPage from "QueryPage"
 
 const App = () => {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)")
@@ -40,11 +40,11 @@ const App = () => {
             <Route path="/">
               <AppNav>
                 <Box sx={{ textAlign: "center", mb: 2 }}>
-                  <img src="logo.png" height="150px" />
+                  <img src="logo.png" height="100px" />
                 </Box>
                 <Switch>
                   <Route exact path="/query">
-                    <Query />
+                    <QueryPage />
                   </Route>
                   <Route exact path="/upload"></Route>
                   <Route exact path="/status"></Route>

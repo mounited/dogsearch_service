@@ -1,3 +1,4 @@
+import sys
 from flask import Response
 from flask_restful import Resource, abort, request
 from bson import ObjectId
@@ -8,10 +9,12 @@ class ImageList(Resource):
     def post(self):
         if request.mimetype.startswith("image/"):
             _, ext = request.mimetype.split("/")
-            data = request.get_data()
+            sys.stdout.flush()
+            data = request.data
+            filename = request.headers["Filename"]
             db = get_db()
             id = db.images.insert_one(
-                {"data": data, "ext": ext, "status": "PENDING"}
+                {"data": data, "filename": filename, "ext": ext, "status": "PENDING"}
             ).inserted_id
             return [{"id": str(id)}], 201
         elif request.mimetype == "application/zip":
@@ -26,7 +29,11 @@ class ImageList(Resource):
         db = get_db()
         images = db.images.find(query, {"data": False})
         return [
-            {"id": str(image["_id"]), "attribute_values": image["attribute_values"]}
+            {
+                "id": str(image["_id"]),
+                "filename": image["filename"],
+                "attribute_values": image["attribute_values"],
+            }
             for image in images
         ]
 
