@@ -17,7 +17,6 @@ db.attributes.insertMany([
     "values": [
       "no",
       "yes",
-      "undefined",
     ]
   },
   {
@@ -25,25 +24,24 @@ db.attributes.insertMany([
     "values": [
       "no",
       "yes",
-      "undefined",
     ]
   },
   {
     "name": "color",
     "values": [
+      "undefined",
       "dark",
       "light",
       "mixed",
-      "undefined",
     ]
   },
   {
     "name": "tail",
     "values": [
+      "undefined",
       "long",
       "short",
       "absent",
-      "undefined",
     ]
   },
 ])
