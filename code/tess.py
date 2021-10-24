@@ -7,12 +7,15 @@ import numpy as np
 
 def filter(image):
     # grayscale image
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    # inverse b/w
-    invert = cv2.bitwise_not(gray)
-    # apply Otsu threshold
-    thresh = cv2.threshold(invert, 0, 255, cv2.THRESH_OTSU)[1]
-    return thresh
+    try:
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        # inverse b/w
+        invert = cv2.bitwise_not(gray)
+        # apply Otsu threshold
+        thresh = cv2.threshold(invert, 0, 255, cv2.THRESH_OTSU)[1]
+        return thresh
+    except Exception:
+        pass
 
 def get_contours(img):
     contours, _ = cv2.findContours(filter(img), cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
@@ -26,23 +29,27 @@ def tesseract(dir):
     bad_res = 0
     for file in os.listdir():
         if file.endswith((".jpeg",".jpg")):
-            print("\n" + ">>> Processing " + file + " <<<")
+            #print("\n" + ">>> Processing " + file + " <<<")
             img = cv2.imread(file)
             thr = filter(img)
             #cv2.imshow("Pic",thr)
             #cv2.waitKey()
-            ocr = pytesseract.image_to_string(thr, lang = "eng+rus", config = "--psm 1")
+            try:
+                ocr = pytesseract.image_to_string(thr, lang = "eng+rus", config = "--psm 1")
+            except Exception:
+                pass
             if len(ocr.splitlines()) > 2:
-                ocr_lines = ocr.splitlines()
-                cam_id = ocr_lines[0].split(' ', 1)[1]
-                cam = ocr_lines[1]
-                addr = ocr_lines[2]
-                print("ID: " + cam_id)
-                print("Camera: " + cam)
-                print("Address: " + addr.lower())
+                try:
+                    ocr_lines = ocr.splitlines()
+                    cam_id = ocr_lines[0].split(' ', 1)[1]
+                    cam = ocr_lines[1]
+                    addr = ocr_lines[2].replace(',', '')
+                    print(file, cam_id, cam.lower(), addr.lower())
+                except Exception:
+                    pass
             else:
                 bad_res += 1
-                print("Camera/Address not parsed")
+                print(file, "", "", "", "")
     print("Matched: " + str(good_res) + "\n" + "Not matched: " + str(bad_res))
 
 parser=argparse.ArgumentParser()
