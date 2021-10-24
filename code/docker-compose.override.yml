@@ -7,3 +7,9 @@ services:
     volumes:
       - ./backend/worker/app:/app
       - ./backend/worker/model/dogsearch/model:/app/dogsearch/model
+  frontend:
+    environment:
+      - REACT_APP_BASE_PATH=${BASE_PATH}
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
