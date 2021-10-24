@@ -39,11 +39,16 @@ db.attributes.insertMany([
     "name": "tail",
     "values": [
       "undefined",
+      "short/absent",
       "long",
-      "short",
-      "absent",
     ]
   },
+  {
+    "name": "address",
+  },
+  {
+    "name": "cam_id",
+  }
 ])
 
 db.attributes.createIndex( { "name": 1 }, { unique: true } )
