@@ -148,7 +148,7 @@ const ImageDetails = ({ image, isOpen, hide }) => {
         <Grid item xs={12} sm={9} md={10} sx={{ textAlign: "center" }}>
           <img
             style={{ maxHeight: "100%", maxWidth: "100%" }}
-            src={`/api/images/${image.id}`}
+            src={`api/images/${image.id}`}
             alt={image.filename}
           />
         </Grid>
