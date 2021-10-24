@@ -34,11 +34,12 @@ def tesseract(dir):
             ocr = pytesseract.image_to_string(thr, lang = "eng+rus", config = "--psm 1")
             if len(ocr.splitlines()) > 2:
                 ocr_lines = ocr.splitlines()
+                cam_id = ocr_lines[0].split(' ', 1)[1]
                 cam = ocr_lines[1]
                 addr = ocr_lines[2]
-                print("Camera " + cam)
+                print("ID: " + cam_id)
+                print("Camera: " + cam)
                 print("Address: " + addr.lower())
-                good_res += 1
             else:
                 bad_res += 1
                 print("Camera/Address not parsed")
