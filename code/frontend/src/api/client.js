@@ -19,12 +19,13 @@ export async function client(
     },
   }
 
-  if (body) {
-    config.body = JSON.stringify(body)
+  if (body instanceof File) {
+    config.body = body
+    config.headers["Filename"] = body.name
+    config.headers["Content-Type"] = body.type
   }
 
   const queryString = query ? new URLSearchParams(query).toString() : ""
-  console.log(query, queryString)
 
   let data
   try {

@@ -19,6 +19,7 @@ import Box from "@mui/material/Box"
 
 import AppNav from "AppNav"
 import QueryPage from "QueryPage"
+import UploadPage from "UploadPage"
 
 const App = () => {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)")
@@ -35,7 +36,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <Router>
+        <Router basename={process.env.REACT_APP_BASE_PATH}>
           <Switch>
             <Route path="/">
               <AppNav>
@@ -46,7 +47,9 @@ const App = () => {
                   <Route exact path="/query">
                     <QueryPage />
                   </Route>
-                  <Route exact path="/upload"></Route>
+                  <Route exact path="/upload">
+                    <UploadPage />
+                  </Route>
                   <Route exact path="/status"></Route>
                   <Route>
                     <Redirect to="/query" />

@@ -12,10 +12,8 @@ import Typography from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
 import Button from "@mui/material/Button"
-import Select from "@mui/material/Select"
 import TextField from "@mui/material/TextField"
 import FormControl from "@mui/material/FormControl"
-import InputLabel from "@mui/material/InputLabel"
 import MenuItem from "@mui/material/MenuItem"
 import ImageList from "@mui/material/ImageList"
 import ImageListItem from "@mui/material/ImageListItem"
@@ -58,7 +56,6 @@ const QueryForm = () => {
           {attributes.map((a, idx) => (
             <Grid key={idx} item xs={12} sm={6} md={4}>
               <FormControl fullWidth>
-                {/* <InputLabel>{a.name}</InputLabel> */}
                 <TextField
                   label={a.name}
                   value={query[a.name] ? query[a.name] : ""}
@@ -181,7 +178,7 @@ const QueryResults = () => {
               setIsOpen(true)
             }}
           >
-            <img src={`/api/images/${image.id}`} alt={image.filename} />
+            <img src={`api/images/${image.id}`} alt={image.filename} />
             <ImageListItemBar subtitle={image.filename} />
           </ImageListItem>
         ))}
