@@ -1,22 +1,13 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 
-import { useSelector, useDispatch } from "react-redux"
-
-import _ from "lodash"
-
-import { styled } from "@mui/material/styles"
+import { useDispatch } from "react-redux"
 
 import Grid from "@mui/material/Grid"
-import Stack from "@mui/material/Stack"
 import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
 import Hidden from "@mui/material/Hidden"
 
 import { addNewImage } from "features/images/slice"
-
-const Input = styled("input")({
-  display: "none",
-})
 
 const UploadPage = () => {
   const dispatch = useDispatch()

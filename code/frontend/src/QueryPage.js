@@ -59,7 +59,6 @@ const QueryForm = () => {
                 <TextField
                   label={a.name}
                   value={query[a.name] ? query[a.name] : ""}
-                  displayEmpty
                   onChange={(e) => {
                     setQuery({ ...query, [a.name]: e.target.value })
                   }}
