@@ -40,7 +40,7 @@ const App = () => {
             <Route path="/">
               <AppNav>
                 <Box sx={{ textAlign: "center", mb: 2 }}>
-                  <img src="logo.png" height="100px" />
+                  <img src="logo.png" height="100px" alt="logo" />
                 </Box>
                 <Switch>
                   <Route exact path="/query">
