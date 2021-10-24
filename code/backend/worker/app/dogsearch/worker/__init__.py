@@ -33,7 +33,8 @@ class Worker:
         end = time.time()
         elapsed_time = end - start
         attribute_values = {
-            a["name"]: a["values"][res[a["name"]]] for a in self.attributes
+            a["name"]: a["values"][res[a["name"]]] if "values" in a else res[a["name"]]
+            for a in self.attributes
         }
         self.db.images.update_one(
             {"_id": id},

@@ -53,7 +53,7 @@ const QueryForm = () => {
     <>
       <Paper sx={{ p: 2 }}>
         <Grid container spacing={2}>
-          {attributes.map((a, idx) => (
+          {attributes.filter(a => a.values).map((a, idx) => (
             <Grid key={idx} item xs={12} sm={6} md={4}>
               <FormControl fullWidth>
                 <TextField
