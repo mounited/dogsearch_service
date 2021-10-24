@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  backend_api:
+    build:
+      context: ./backend/api
+      dockerfile: Dockerfile.production
+  backend_worker:
+    build:
+      context: ./backend/worker
+      dockerfile: Dockerfile.production
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.production
+      args:
+        - REACT_APP_BASE_URL=${BASE_URL}
+        - REACT_APP_BASE_PATH=${BASE_PATH}
