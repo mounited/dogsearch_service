@@ -1,28 +1,17 @@
 import { createSlice, createSelector, createAsyncThunk } from "@reduxjs/toolkit"
 
+import { client } from "api/client"
+
+export const fetchAttributes = createAsyncThunk(
+  "attributes/fetchAttributes",
+  async (_, { getState }) => {
+    const response = await client.get("/attributes")
+    return response
+  }
+)
+
 const initialState = {
-  items: [
-    {
-      name: "is_animal_there",
-      values: ["no", "yes"],
-    },
-    {
-      name: "is_it_a_dog",
-      values: ["no", "yes", "undefined"],
-    },
-    {
-      name: "is_the_owner_there",
-      values: ["no", "yes", "undefined"],
-    },
-    {
-      name: "color",
-      values: ["dark", "light", "undefined"],
-    },
-    {
-      name: "tail",
-      values: ["long", "short/absent", "undefined"],
-    },
-  ],
+  items: [],
   status: "idle",
 }
 
@@ -30,6 +19,18 @@ const attributesSlice = createSlice({
   name: 'attributes',
   initialState,
   reducers: {},
+  extraReducers: {
+    [fetchAttributes.pending]: (state, action) => {
+      state.status = "loading"
+    },
+    [fetchAttributes.fulfilled]: (state, action) => {
+      state.status = "success"
+      state.items = action.payload
+    },
+    [fetchAttributes.rejected]: (state, action) => {
+      state.status = "failed"
+    },
+  },
 });
 
 export const selectAllAttributes = (state) => state.attributes.items

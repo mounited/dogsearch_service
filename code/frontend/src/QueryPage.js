@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 
 import { useSelector, useDispatch } from "react-redux"
 
@@ -9,11 +9,11 @@ import useMediaQuery from "@mui/material/useMediaQuery"
 
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Box"
-import Container from "@mui/material/Container"
 import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
 import Button from "@mui/material/Button"
 import Select from "@mui/material/Select"
+import TextField from "@mui/material/TextField"
 import FormControl from "@mui/material/FormControl"
 import InputLabel from "@mui/material/InputLabel"
 import MenuItem from "@mui/material/MenuItem"
@@ -21,9 +21,7 @@ import ImageList from "@mui/material/ImageList"
 import ImageListItem from "@mui/material/ImageListItem"
 import ImageListItemBar from "@mui/material/ImageListItemBar"
 import IconButton from "@mui/material/IconButton"
-import InfoIcon from "@mui/icons-material/Info"
 import CloseIcon from "@mui/icons-material/Close"
-import DialogTitle from "@mui/material/DialogTitle"
 import Dialog from "@mui/material/Dialog"
 import AppBar from "@mui/material/AppBar"
 import Toolbar from "@mui/material/Toolbar"
@@ -31,11 +29,28 @@ import List from "@mui/material/List"
 import ListItem from "@mui/material/ListItem"
 import ListItemText from "@mui/material/ListItemText"
 
-import { selectAllAttributes } from "features/attributes/slice"
-import { selectAllImages } from "features/images/slice"
+import { selectAllAttributes, fetchAttributes } from "features/attributes/slice"
+import { selectAllImages, fetchImages } from "features/images/slice"
 
 const QueryForm = () => {
   const attributes = useSelector(selectAllAttributes)
+  const status = useSelector((state) => state.attributes.status)
+  const dispatch = useDispatch()
+
+  const emptyQuery = attributes.reduce((res, a) => {
+    res[a.name] = ""
+    return res
+  }, {})
+  const [query, setQuery] = useState({})
+
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchAttributes())
+    } else if (status === "success") {
+      setQuery(emptyQuery)
+    }
+  }, [status, dispatch])
+
   return (
     <>
       <Paper sx={{ p: 2 }}>
@@ -43,19 +58,45 @@ const QueryForm = () => {
           {attributes.map((a, idx) => (
             <Grid key={idx} item xs={12} sm={6} md={4}>
               <FormControl fullWidth>
-                <InputLabel>{a.name}</InputLabel>
-                <Select label={a.name}>
+                {/* <InputLabel>{a.name}</InputLabel> */}
+                <TextField
+                  label={a.name}
+                  value={query[a.name] ? query[a.name] : ""}
+                  displayEmpty
+                  onChange={(e) => {
+                    setQuery({ ...query, [a.name]: e.target.value })
+                  }}
+                  select
+                >
+                  <MenuItem value={""}>&hellip;</MenuItem>
                   {a.values.map((v, idx) => (
-                    <MenuItem key={idx}>{v}</MenuItem>
+                    <MenuItem key={idx} value={v}>
+                      {v}
+                    </MenuItem>
                   ))}
-                </Select>
+                </TextField>
               </FormControl>
             </Grid>
           ))}
         </Grid>
       </Paper>
       <Box sx={{ mt: 2, textAlign: "center" }}>
-        <Button variant="contained">Search</Button>
+        <Button
+          variant="contained"
+          onClick={() =>
+            dispatch(
+              fetchImages(
+                _.flow([
+                  Object.entries,
+                  (arr) => arr.filter(([key, value]) => value !== ""),
+                  Object.fromEntries,
+                ])(query)
+              )
+            )
+          }
+        >
+          Search
+        </Button>
       </Box>
     </>
   )
@@ -111,6 +152,7 @@ const ImageDetails = ({ image, isOpen, hide }) => {
           <img
             style={{ maxHeight: "100%", maxWidth: "100%" }}
             src={`/api/images/${image.id}`}
+            alt={image.filename}
           />
         </Grid>
       </Grid>
@@ -139,7 +181,7 @@ const QueryResults = () => {
               setIsOpen(true)
             }}
           >
-            <img src={`/api/images/${image.id}`} />
+            <img src={`/api/images/${image.id}`} alt={image.filename} />
             <ImageListItemBar subtitle={image.filename} />
           </ImageListItem>
         ))}
