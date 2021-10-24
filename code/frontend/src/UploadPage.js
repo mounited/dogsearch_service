@@ -30,7 +30,7 @@ const UploadPage = () => {
           <TextField
             id="contained-button-file"
             type="file"
-            inputProps={{ accept: "image/*" }}
+            inputProps={{ accept: "image/*,application/zip" }}
             value={filename}
             onChange={(e) => {
               console.log(e.target.files)
