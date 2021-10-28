@@ -1,21 +1,38 @@
-FROM debian:11.1
+FROM debian:10.11
 
 RUN apt-get update && apt-get install -y \
-  python3 \
-  python3-pip \
-  python3-pymongo \
-  && rm -rf /var/apt/lists/*
+    python3 \
+    python3-venv \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    tesseract-ocr \
+    tesseract-ocr-rus \
+    wget \
+    && rm -rf /var/apt/lists/*
+
+ENV VIRTUAL_ENV /venv
+RUN python3 -m venv $VIRTUAL_ENV
+
+ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
+
+RUN pip install --upgrade pip wheel
+
+ENV TF_CPP_MIN_LOG_LEVEL=3
 
 COPY model /model
 
-WORKDIR /model
+WORKDIR /model/code
 
-RUN pip3 install -r requirements.txt
+RUN pip install -r requirements.txt
+
+ENV DATA=/model/data
+
+RUN /model/prepare.sh
 
 COPY app /app
 
 WORKDIR /app
 
-RUN pip3 install -r requirements.txt
+RUN pip install -r requirements.txt
 
-CMD ["python3", "-m", "dogsearch.worker"]
+CMD ["python", "-m", "dogsearch.worker"]

@@ -1,3 +1,4 @@
+import os
 import sys
 import time
 
@@ -9,7 +10,7 @@ from dogsearch.model import Model
 class Worker:
     def __init__(self, host, dbname):
         self.db = MongoClient("mongodb://{}".format(host))[dbname]
-        self.model = Model.create("random")
+        self.model = Model.create(os.environ["MODEL_TYPE"])
         self.attributes = [a for a in self.db.attributes.find({}, {"_id": False})]
 
     def run(self):

@@ -9,5 +9,5 @@ setup(
     author="Vadim Alimguzhin",
     author_email="vadim.alimguzhin@gmail.com",
     packages=["dogsearch.worker"],
-    install_requires=[],
+    install_requires=["pymongo"],
 )
