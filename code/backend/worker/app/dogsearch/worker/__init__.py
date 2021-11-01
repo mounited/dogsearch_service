@@ -1,3 +1,4 @@
+import os
 import sys
 import time
 
@@ -9,7 +10,7 @@ from dogsearch.model import Model
 class Worker:
     def __init__(self, host, dbname):
         self.db = MongoClient("mongodb://{}".format(host))[dbname]
-        self.model = Model.create("random")
+        self.model = Model.create(os.environ["MODEL_TYPE"])
         self.attributes = [a for a in self.db.attributes.find({}, {"_id": False})]
 
     def run(self):
@@ -29,26 +30,42 @@ class Worker:
         if image is None:
             return
         start = time.time()
-        res = self.model.process(image["data"], image["ext"])
+        try:
+            res = self.model.process(image["data"], image["ext"])
+        except Exception as e:
+            res = None
+            print(e)
         end = time.time()
         elapsed_time = end - start
-        attribute_values = {
-            a["name"]: a["values"][res[a["name"]]] if "values" in a else res[a["name"]]
-            for a in self.attributes
-        }
-        self.db.images.update_one(
-            {"_id": id},
-            {
-                "$set": {
-                    "status": "PROCESSED",
-                    "elapsed_time": elapsed_time,
-                    "attribute_values": attribute_values,
-                }
-            },
-        )
-        print(
-            "id: {}, elapsed_time: {}, result: {}".format(
-                str(id), elapsed_time, attribute_values
+        if res is not None:
+            attribute_values = {
+                a["name"]: a["values"][res[a["name"]]] if "values" in a else res[a["name"]]
+                for a in self.attributes
+            }
+            self.db.images.update_one(
+                {"_id": id},
+                {
+                    "$set": {
+                        "status": "PROCESSED",
+                        "elapsed_time": elapsed_time,
+                        "attribute_values": attribute_values,
+                    }
+                },
             )
-        )
+            print(
+                "id: {}, elapsed_time: {}, result: {}".format(
+                    str(id), elapsed_time, attribute_values
+                )
+            )
+        else:
+            self.db.images.update_one(
+                {"_id": id},
+                {
+                    "$set": {
+                        "status": "FAILED",
+                        "elapsed_time": elapsed_time,
+                    }
+                },
+            )
+            print("id: {}, elapsed_time: {}, FAILED")
         sys.stdout.flush()
