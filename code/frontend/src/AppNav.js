@@ -27,14 +27,14 @@ const AppNav = (props) => {
     setOpen(!open)
   }
   const drawerItems = [
-    { text: "Query", icon: "search" },
-    { text: "Upload", icon: "upload" },
-    { text: "Status", icon: "assessment" },
+    { text: "Запрос", path: "query", icon: "search" },
+    { text: "Загрузка", path: "upload", icon: "upload" },
+    { text: "Статус", path: "status", icon: "assessment" },
   ]
-  let selected
+  let selected = null
   for (let item of drawerItems) {
-    if (location.pathname.startsWith(`/${item.text.toLowerCase()}`)) {
-      selected = item.text
+    if (location.pathname.startsWith(`/${item.path}`)) {
+      selected = item
       break
     }
   }
@@ -45,14 +45,13 @@ const AppNav = (props) => {
       <Divider />
       <List>
         {drawerItems.map((s) => {
-          const path = s.text.toLowerCase()
           return (
             <ListItem
               key={s.text}
-              selected={s.text === selected}
+              selected={selected ? s.path === selected.path : false}
               button
               component={Link}
-              to={`/${path}`}
+              to={`/${s.path}`}
             >
               <ListItemIcon>
                 <Icon>{s.icon}</Icon>
@@ -89,7 +88,7 @@ const AppNav = (props) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            {selected}
+            {selected ? selected.text : ""}
           </Typography>
         </Toolbar>
       </AppBar>

@@ -39,7 +39,7 @@ class Worker:
         elapsed_time = end - start
         if res is not None:
             attribute_values = {
-                a["name"]: a["values"][res[a["name"]]] if "values" in a else res[a["name"]]
+                a["name"]: a["values"][res[a["name"]]]["raw"] if "values" in a else res[a["name"]]
                 for a in self.attributes
             }
             self.db.images.update_one(

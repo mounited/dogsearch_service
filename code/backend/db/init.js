@@ -7,40 +7,84 @@ while (!rs.isMaster().ismaster) {
 db.attributes.insertMany([
   {
     "name": "is_animal_there",
+    "desc": "есть животное",
     "values": [
-      "no",
-      "yes",
+      {
+        "raw": "no",
+        "desc": "нет",
+      },
+      {
+        "raw": "yes",
+        "desc": "да",
+      },
     ]
   },
   {
     "name": "is_it_a_dog",
+    "desc": "это собака",
     "values": [
-      "no",
-      "yes",
+      {
+        "raw": "no",
+        "desc": "нет",
+      },
+      {
+        "raw": "yes",
+        "desc": "да",
+      },
     ]
   },
   {
     "name": "is_the_owner_there",
+    "desc": "есть хозяин",
     "values": [
-      "no",
-      "yes",
+      {
+        "raw": "no",
+        "desc": "нет",
+      },
+      {
+        "raw": "yes",
+        "desc": "да",
+      },
     ]
   },
   {
     "name": "color",
+    "desc": "цвет",
     "values": [
-      "undefined",
-      "dark",
-      "light",
-      "mixed",
+      {
+        "raw": "undefined",
+        "desc": "не определено",
+      },
+      {
+        "raw": "dark",
+        "desc": "тёмный",
+      },
+      {
+        "raw": "light",
+        "desc": "светлый",
+      },
+      {
+        "raw": "mixed",
+        "desc": "смешанный",
+      },
     ]
   },
   {
     "name": "tail",
+    "desc": "хвост",
     "values": [
-      "undefined",
-      "short/absent",
-      "long",
+      {
+        "raw": "undefined",
+        "desc": "не определено",
+      },
+      {
+        "raw": "short/absent",
+        "desc": "короткий/отсутствует",
+      },
+      {
+        "raw": "long",
+        "desc": "длинный",
+      },
     ]
   },
   {

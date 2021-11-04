@@ -57,7 +57,7 @@ const QueryForm = () => {
             <Grid key={idx} item xs={12} sm={6} md={4}>
               <FormControl fullWidth>
                 <TextField
-                  label={a.name}
+                  label={a.desc}
                   value={query[a.name] ? query[a.name] : ""}
                   onChange={(e) => {
                     setQuery({ ...query, [a.name]: e.target.value })
@@ -66,8 +66,8 @@ const QueryForm = () => {
                 >
                   <MenuItem value={""}>&hellip;</MenuItem>
                   {a.values.map((v, idx) => (
-                    <MenuItem key={idx} value={v}>
-                      {v}
+                    <MenuItem key={idx} value={v.raw}>
+                      {v.desc}
                     </MenuItem>
                   ))}
                 </TextField>
@@ -91,7 +91,7 @@ const QueryForm = () => {
             )
           }
         >
-          Search
+          Поиск
         </Button>
       </Box>
     </>
