@@ -42,7 +42,7 @@ const UploadPage = () => {
               setFilename("")
             }}
           >
-            Upload
+            Загрузить
           </Button>
         </Grid>
       </Grid>
