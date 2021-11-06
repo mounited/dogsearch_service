@@ -88,10 +88,16 @@ db.attributes.insertMany([
     ]
   },
   {
+    "name": "breed",
+    "desc": "порода"
+  },
+  {
     "name": "address",
+    "desc": "адрес"
   },
   {
     "name": "cam_id",
+    "desc": "камера"
   }
 ])
 
